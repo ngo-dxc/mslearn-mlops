@@ -5,8 +5,6 @@ import glob
 import os
 
 import mlflow
-import mlflow.sklearn
-
 
 import pandas as pd
 import numpy as np
@@ -20,19 +18,18 @@ from sklearn.metrics import roc_curve
 # define functions
 def main(args):
     # TO DO: enable autologging
-    with mlflow.start_run():
-        mlflow.sklearn.autolog()  # Enable autologging
+    mlflow.autolog()  # Enable autologging
 
-        # read data
-        df = get_csvs_df(args.training_data)
+    # read data
+    df = get_csvs_df(args.training_data)
 
-        # split data
-        X_train, X_test, y_train, y_test = split_data(df)
+    # split data
+    X_train, X_test, y_train, y_test = split_data(df)
 
-        # train model
-        model = train_model(args.reg_rate, X_train, X_test, y_train, y_test)
+    # train model
+    model = train_model(args.reg_rate, X_train, X_test, y_train, y_test)
 
-        evaluate_model(model, X_test, y_test)
+    evaluate_model(model, X_test, y_test)
 
 def get_csvs_df(path):
     if not os.path.exists(path):
@@ -57,11 +54,11 @@ def train_model(reg_rate, X_train, X_test, y_train, y_test):
 def evaluate_model(model, X_test, y_test):    
     y_hat = model.predict(X_test)
     acc = np.average(y_hat == y_test)
-    print(acc)
+    print("ACC: " + str(acc))
 
     y_scores = model.predict_proba(X_test)
     auc = roc_auc_score(y_test,y_scores[:,1])
-    print(auc)
+    print("AUC: " + str(auc))
 
     # plot ROC curve
     fpr, tpr, thresholds = roc_curve(y_test, y_scores[:,1])
