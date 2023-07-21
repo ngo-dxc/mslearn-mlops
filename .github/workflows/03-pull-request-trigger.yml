@@ -1,0 +1,12 @@
+name: Manually trigger an Azure Machine Learning job
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
