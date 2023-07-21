@@ -1,33 +1,28 @@
-trigger:
-- main
+name: My Multi-Stage Pipeline
 
-stages:
-- stage: deployDev
-  displayName: 'Deploy to development environment'
-  jobs:
-    - deployment: publishPipeline
-      displayName: 'Model Training'
-      environment: Dev
-      pool:
-        vmImage: ubuntu-latest
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-              - script: echo hello world
+on:
+  workflow_dispatch:
 
-- stage: deployProd
-  dependsOn: deployDev
-  condition: succeeded('deployDev')
-  displayName: 'Deploy to production environment'
-  jobs:
-    - deployment: publishPipeline
-      displayName: 'Model Training'
-      pool:
-        vmImage: ubuntu-latest
-      environment: Prod
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-              - script: echo how are you
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: Dev
+    steps:
+      - name: Message
+        run: |
+          echo "Dev"
+
+      # Add other build steps here
+
+  prod:
+    runs-on: ubuntu-latest
+    needs: dev
+    environment:
+      name: Prod
+    steps:
+      - name: Message
+        run: |
+          echo "Prod"
+
+      # Add deployment steps here
