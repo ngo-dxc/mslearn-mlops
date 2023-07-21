@@ -20,7 +20,8 @@ jobs:
     - name: run pipeline
       run: |
         job_name=$(az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream --query 'name' -o tsv)
-        echo "Job Name: $job_name"
+        echo "Job Name: $job_name" >> job_name.txt
+      continue-on-error: true
 
   production:
     needs: train
