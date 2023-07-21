@@ -15,6 +15,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
 
+
 # define functions
 def main(args):
     # TO DO: enable autologging
@@ -31,6 +32,7 @@ def main(args):
 
     evaluate_model(model, X_test, y_test)
 
+
 def get_csvs_df(path):
     if not os.path.exists(path):
         raise RuntimeError(f"Cannot use non-existent path provided: {path}")
@@ -42,27 +44,34 @@ def get_csvs_df(path):
 
 # TO DO: add function to split data
 def split_data(df):
-    X, y = df[['Pregnancies','PlasmaGlucose','DiastolicBloodPressure','TricepsThickness','SerumInsulin','BMI','DiabetesPedigree','Age']].values, df['Diabetic'].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+    X, y = df[['Pregnancies', 'PlasmaGlucose',
+               'DiastolicBloodPressure', 'TricepsThickness',
+               'SerumInsulin', 'BMI',
+               'DiabetesPedigree', 'Age']].values, df['Diabetic'].values
+    X_train, X_test, y_train, y_test = train_test_split(
+                                        X, y, test_size=0.30, random_state=0)
     return X_train, X_test, y_train, y_test
+
 
 def train_model(reg_rate, X_train, X_test, y_train, y_test):
     # train model
-    model = LogisticRegression(C=1/reg_rate, solver="liblinear").fit(X_train, y_train)
+    model = LogisticRegression(C=1/reg_rate,
+                               solver="liblinear").fit(X_train, y_train)
     return model
 
-def evaluate_model(model, X_test, y_test):    
+
+def evaluate_model(model, X_test, y_test):
     y_hat = model.predict(X_test)
     acc = np.average(y_hat == y_test)
     print("ACC: " + str(acc))
 
     y_scores = model.predict_proba(X_test)
-    auc = roc_auc_score(y_test,y_scores[:,1])
+    auc = roc_auc_score(y_test, y_scores[:, 1])
     print("AUC: " + str(auc))
 
     # plot ROC curve
-    fpr, tpr, thresholds = roc_curve(y_test, y_scores[:,1])
-    fig = plt.figure(figsize=(6, 4))
+    fpr, tpr, thresholds = roc_curve(y_test, y_scores[:, 1])
+    plt.figure(figsize=(6, 4))
     # Plot the diagonal 50% line
     plt.plot([0, 1], [0, 1], 'k--')
     # Plot the FPR and TPR achieved by our model
@@ -70,7 +79,7 @@ def evaluate_model(model, X_test, y_test):
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('ROC Curve')
-    
+
 
 def parse_args():
     # setup arg parser
@@ -87,6 +96,7 @@ def parse_args():
 
     # return args
     return args
+
 
 # run script
 if __name__ == "__main__":
