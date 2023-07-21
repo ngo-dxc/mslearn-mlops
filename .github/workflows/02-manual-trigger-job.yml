@@ -22,3 +22,22 @@ jobs:
         job_name=$(az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --query 'name' -o tsv)
         echo "Job Name: $job_name"
 
+  production:
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@main
+      - name: Install az ml extension
+        run: az extension add -n ml -y
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: Set current directory
+        run: cd src
+      - name: Retrieve job name from previous step
+        run: |
+          job_name=$(cat job_name.txt | grep "Job Name:" | awk '{print $3}')
+          echo "Job Name: $job_name"
+
