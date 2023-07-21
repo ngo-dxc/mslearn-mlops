@@ -9,10 +9,6 @@ jobs:
     steps:
     - name: Check out repo
       uses: actions/checkout@main
-    - name: Get the latest az
-      run: sudo apt-get update
-    - name: Install the latest az
-      run: sudo apt-get install azure-cli
     - name: Install az ml extension
       run: az extension add -n ml -y
     - name: Azure login
