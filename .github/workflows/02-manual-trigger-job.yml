@@ -19,7 +19,7 @@ jobs:
       run: cd src
     - name: run pipeline
       run: |
-        job_name=$(az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --query 'name' -o tsv)
+        job_name=$(az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream --query 'name' -o tsv)
         echo "Job Name: $job_name"
 
   production:
