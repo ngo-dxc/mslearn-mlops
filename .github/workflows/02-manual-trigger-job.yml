@@ -19,5 +19,5 @@ jobs:
       run: cd src
     - name: run pipeline
       run: |
-        job_name=$(az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream --query runId -o json)
+        job_name=$(az ml job create --file src/dev-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream -o json)
         echo "Job: $job_name"
