@@ -20,4 +20,5 @@ jobs:
     - name: run pipeline
       run: |
         job_name=$(az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream --query 'name' -o tsv)
-        az ml model create --name test-model --path azureml://jobs/$job_name/outputs/artifacts/paths/model/ --resource-group AzMLChallenge --workspace-name AzMLChallengeDL        
+        model_path="azureml://jobs/$job_name/outputs/artifacts/paths/model/"
+        echo "Model Path: $model_path"
