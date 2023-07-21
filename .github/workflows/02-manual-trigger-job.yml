@@ -19,4 +19,18 @@ jobs:
       run: cd src
     - name: run pipeline
       run: az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
+    - name: Save model to Git
+      run: |
+        # Configure git with your username and email
+        git config --global user.name "Your Name"
+        git config --global user.email "your.email@example.com"
+
+        # Add the model artifacts to the git repository
+        git add model
+
+        # Commit the changes with a message
+        git commit -m "Add trained model artifacts"
+
+        # Push the changes to the remote repository
+        git push origin main
 
