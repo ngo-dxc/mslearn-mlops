@@ -74,7 +74,7 @@ def evaluate_model(model, X_test, y_test):
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('ROC Curve')
-    
+
 
 def parse_args():
     # setup arg parser
