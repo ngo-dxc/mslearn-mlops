@@ -1,0 +1,32 @@
+trigger:
+- main
+
+pool: 
+  vmImage: ubuntu-latest
+
+stages:
+- stage: deployDev
+  displayName: 'Deploy to development environment'
+  jobs:
+    - deployment: publishPipeline
+      displayName: 'Model Training'
+      environment: Dev
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: echo hello world
+
+- stage: deployProd
+  dependsOn: deployDev
+  condition: succeeded('deployDev')
+  displayName: 'Deploy to production environment'
+  jobs:
+    - deployment: publishPipeline
+      displayName: 'Model Training'
+      environment: Prod
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - script: echo how are you
