@@ -1,4 +1,4 @@
-name: Manually trigger an Azure Machine Learning job
+name: Pull request trigger
 
 on:
   pull_request:

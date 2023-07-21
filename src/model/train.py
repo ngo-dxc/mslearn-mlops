@@ -31,6 +31,7 @@ def main(args):
 
     evaluate_model(model, X_test, y_test)
 
+
 def get_csvs_df(path):
     if not os.path.exists(path):
         raise RuntimeError(f"Cannot use non-existent path provided: {path}")
@@ -46,10 +47,12 @@ def split_data(df):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
     return X_train, X_test, y_train, y_test
 
+
 def train_model(reg_rate, X_train, X_test, y_train, y_test):
     # train model
     model = LogisticRegression(C=1/reg_rate, solver="liblinear").fit(X_train, y_train)
     return model
+
 
 def evaluate_model(model, X_test, y_test):    
     y_hat = model.predict(X_test)
