@@ -5,6 +5,7 @@ import glob
 import os
 
 import mlflow
+import mlflow.sklearn
 
 import pandas as pd
 import numpy as np
@@ -31,6 +32,8 @@ def main(args):
     model = train_model(args.reg_rate, X_train, X_test, y_train, y_test)
 
     evaluate_model(model, X_test, y_test)
+
+    mlflow.sklearn.save_model(model, 'model')
 
 
 def get_csvs_df(path):

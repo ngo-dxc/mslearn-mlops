@@ -1,0 +1,25 @@
+name: Deployment and testing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@main
+      - name: Install az ml extension
+        run: az extension add -n ml -y
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: set current directory
+        run: cd src
+      - name: generate endpoint
+        run: az ml online-endpoint create --name diabetes-mlflow -f src/endpoint-deploy.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
+      - name: deployment of a MLflow model
+        run: az ml online-deployment create --name mlflow-deployment --endpoint diabetes-mlflow -f src/mlflow-deployment.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --all-traffic
+      - name: test endpoint
+        run: az ml online-endpoint invoke --name diabetes-mlflow --request-file src/sample-data.json --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
