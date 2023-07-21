@@ -1,0 +1,12 @@
+name: Prod Job
+
+on:
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Prod
+      run: |
+        echo "Prod"

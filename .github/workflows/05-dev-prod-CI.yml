@@ -1,9 +1,6 @@
 trigger:
 - main
 
-pool: 
-  vmImage: ubuntu-latest
-
 stages:
 - stage: deployDev
   displayName: 'Deploy to development environment'
@@ -11,6 +8,8 @@ stages:
     - deployment: publishPipeline
       displayName: 'Model Training'
       environment: Dev
+      pool:
+        vmImage: ubuntu-latest
       strategy:
         runOnce:
           deploy:
@@ -24,6 +23,8 @@ stages:
   jobs:
     - deployment: publishPipeline
       displayName: 'Model Training'
+      pool:
+        vmImage: ubuntu-latest
       environment: Prod
       strategy:
         runOnce:
