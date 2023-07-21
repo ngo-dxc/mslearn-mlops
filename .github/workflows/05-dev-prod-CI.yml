@@ -20,7 +20,7 @@ jobs:
       - name: set current directory
         run: cd src
       - name: run pipeline
-        run: az ml job create --file src/dev-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
+        run: az ml job create --file src/dev-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream
 
   prod:
     runs-on: ubuntu-latest
