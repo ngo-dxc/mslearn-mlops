@@ -58,9 +58,11 @@ def evaluate_model(model, X_test, y_test):
     acc = np.average(y_hat == y_test)
     print("ACC: " + str(acc))
 
+
     y_scores = model.predict_proba(X_test)
     auc = roc_auc_score(y_test,y_scores[:,1])
     print("AUC: " + str(auc))
+
 
     # plot ROC curve
     fpr, tpr, thresholds = roc_curve(y_test, y_scores[:,1])
