@@ -4,7 +4,7 @@ endpoint_name: mlflow-endpoint
 model:
   name: sample-mlflow-sklearn-model
   version: 1
-  path: model
+  path: azureml://jobs/<job-name>/outputs/model
   type: mlflow_model
 instance_type: Standard_F2s_v2
 instance_count: 1
