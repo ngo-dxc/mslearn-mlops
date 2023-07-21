@@ -9,11 +9,18 @@ jobs:
     environment:
       name: Dev
     steps:
-      - name: Message
-        run: |
-          echo "Dev"
-
-      # Add other build steps here
+      - name: Check out repo
+        uses: actions/checkout@main
+      - name: Install az ml extension
+        run: az extension add -n ml -y
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: set current directory
+        run: cd src
+      - name: run pipeline
+        run: az ml job create --file src/dev-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
 
   prod:
     runs-on: ubuntu-latest
@@ -21,8 +28,15 @@ jobs:
     environment:
       name: Prod
     steps:
-      - name: Message
-        run: |
-          echo "Prod"
-
-      # Add deployment steps here
+      - name: Check out repo
+        uses: actions/checkout@main
+      - name: Install az ml extension
+        run: az extension add -n ml -y
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: set current directory
+        run: cd src
+      - name: run pipeline
+        run: az ml job create --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
