@@ -6,8 +6,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      ACTIONS_RUNNER_DEBUG: true # Enable debug mode 
     steps:
       - name: Check out repo
         uses: actions/checkout@main
