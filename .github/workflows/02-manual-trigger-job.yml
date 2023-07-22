@@ -25,7 +25,7 @@ jobs:
         # Generate the job name with prefix "job" and current date-time
         job_name="job_$(date +'%Y%m%d_%H%M%S')"
         echo "job_name=${job_name}" >> $GITHUB_OUTPUT
-        az ml job create --name $job_name --file src/prod-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream
+        az ml job create --name $job_name --file src/dev-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --stream
   
   register:
     runs-on: ubuntu-latest
