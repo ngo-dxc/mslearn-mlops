@@ -1,8 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: mlflow-deployment
-environment_variables:
-- name: model_name
-  value: '${{ model_name }}'
 endpoint_name: mlflow-endpoint
 model: azureml:${{environment_variables.model_name}}@latest
 instance_type: Standard_D2as_v4
