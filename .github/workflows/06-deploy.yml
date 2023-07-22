@@ -6,11 +6,15 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_RUNNER_DEBUG: true # Enable debug mode 
     steps:
       - name: Check out repo
         uses: actions/checkout@main
       - name: Install az ml extension
         run: az extension add -n ml -y
+      - name: Update Azure ML SDK
+        run: pip install --upgrade azureml-sdk
       - name: Azure login
         uses: azure/login@v1
         with:
