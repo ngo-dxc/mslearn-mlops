@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@main
+      - name: Check az version
+        run: az --version  
       - name: Install az ml extension
         run: az extension add -n ml -y
       - name: Azure login
@@ -17,10 +19,4 @@ jobs:
           creds: ${{secrets.AZURE_CREDENTIALS}}
       - name: set current directory
         run: cd src
-      - name: deployment of a MLflow model
-        run: az ml online-deployment create --name mlflow-deployment \
-              --endpoint diabetes-mlflow -f src/mlflow-deployment.yml \
-              --set model='azureml:model_20230722_092345@latest' \
-              --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --all-traffic
-      - name: test endpoint
-        run: az ml online-endpoint invoke --name diabetes-mlflow --request-file src/sample-data.json --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
+      
