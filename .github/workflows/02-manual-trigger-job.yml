@@ -27,8 +27,9 @@ jobs:
     
         # Output the variable value to be used in subsequent steps
         echo "Generated variable: $JOB_NAME"
+        echo "::set-output name=job_name::$JOB_NAME"
     
     - name: Use Experiment Variable
       run: |
         # Access the generated variable in subsequent steps
-        echo "Using the generated variable: $JOB_NAME"
+        echo "Using the generated variable: ${{ steps.set_job_name.outputs.job_name }}""
