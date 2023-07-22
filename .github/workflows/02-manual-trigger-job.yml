@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  JOB_NAME: ""    
+  JOB_NAME:   
 
 jobs:
   train:
