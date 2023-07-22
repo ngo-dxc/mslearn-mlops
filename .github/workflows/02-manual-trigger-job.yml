@@ -3,6 +3,9 @@ name: Manually trigger an Azure Machine Learning job
 on:
   workflow_dispatch:
 
+env:
+  JOB_NAME: ""    
+
 jobs:
   train:
     runs-on: ubuntu-latest
@@ -17,8 +20,15 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: set current directory
       run: cd src
-    - name: run pipeline
+    - name: Set Experiment Variable
       run: |
-        job_name=$(az ml job create --file src/dev-job.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --query 'name' --stream)
-        json_content=$(echo "$output" | grep -oP '(?<=\{).*(?=\})')
-        echo "TSV Content: $tsv_content"
+        # Generate the variable value with prefix "experiment" and current date-time
+        export JOB_NAME="experiment_$(date +'%Y%m%d_%H%M%S')"
+    
+        # Output the variable value to be used in subsequent steps
+        echo "Generated variable: $JOB_NAME"
+    
+    - name: Use Experiment Variable
+      run: |
+        # Access the generated variable in subsequent steps
+        echo "Using the generated variable: $JOB_NAME"
