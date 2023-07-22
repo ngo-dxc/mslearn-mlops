@@ -21,6 +21,7 @@ jobs:
     - name: set current directory
       run: cd src
     - name: Set Experiment Variable
+      id: set_job_name
       run: |
         # Generate the variable value with prefix "experiment" and current date-time
         export JOB_NAME="experiment_$(date +'%Y%m%d_%H%M%S')"
