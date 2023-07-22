@@ -6,7 +6,7 @@ command: >-
   --reg_rate ${{inputs.reg_rate}}
 inputs:
   training_data: 
-    type: uri_folder 
+    type: uri_folder
     path: azureml:diabetes-prod-folder:1
     mode: ro_mount 
   reg_rate: 0.01
