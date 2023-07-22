@@ -18,6 +18,6 @@ jobs:
       - name: set current directory
         run: cd src
       - name: deployment of a MLflow model
-        run: az ml online-deployment create --name mlflow-deployment --endpoint diabetes-mlflow -f src/mlflow-deployment.yml --environment-variables 'model_name'='model_20230722_092345' --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --skip-script-validation --all-traffic
+        run: az ml online-deployment create --name mlflow-deployment --endpoint diabetes-mlflow -f src/mlflow-deployment.yml --set 'model_name'='model_20230722_092345' --resource-group AzMLChallenge --workspace-name AzMLChallengeDL --skip-script-validation --all-traffic
       - name: test endpoint
         run: az ml online-endpoint invoke --name diabetes-mlflow --request-file src/sample-data.json --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
