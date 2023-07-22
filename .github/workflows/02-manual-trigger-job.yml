@@ -6,16 +6,29 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
-    environment:
-      name: Dev
+    outputs:
+      output: ${{ steps.step.outputs.name }}
     steps:
     - name: Check out repo
       uses: actions/checkout@main
     - name: set current directory
       run: cd src
     - name: Set Experiment Variable
-      id: step1
+      id: step
       run: |
         # Generate the variable value with prefix "experiment" and current date-time
         name="experiment_$(date +'%Y%m%d_%H%M%S')"
         echo "name=${name}" >> $GITHUB_OUTPUT
+  
+  register:
+    runs-on: ubuntu-latest
+    needs: train
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: set current directory
+      run: cd src
+    - name: Get Experiment Variable
+      env:
+        OUTPUT: ${{needs.train.outputs.output}}
+      run: echo "$OUTPUT"
