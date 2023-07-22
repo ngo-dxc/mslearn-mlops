@@ -3,6 +3,6 @@ name: mlflow-deployment
 properties:
   model_name: ''
 endpoint_name: mlflow-endpoint
-model: azureml:$properties.model_name@latest
+model: azureml:${properties.model_name}@latest
 instance_type: Standard_D2as_v4
 instance_count: 2
