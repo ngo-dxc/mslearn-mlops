@@ -15,4 +15,4 @@ jobs:
       run: |
         # Generate the variable value with prefix "experiment" and current date-time
         name="experiment_$(date +'%Y%m%d_%H%M%S')"
-        echo "name=${name}" >> $GITHUB_ENV
+        echo "name=${name}" >> $GITHUB_OUTPUT
