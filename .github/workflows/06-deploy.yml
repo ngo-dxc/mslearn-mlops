@@ -9,10 +9,10 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@main
-      - name: Check az version
-        run: az --version  
       - name: Install az ml extension
         run: az extension add -n ml -y
+      - name: Check az version
+        run: az --version  
       - name: Azure login
         uses: azure/login@v1
         with:
