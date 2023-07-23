@@ -31,14 +31,13 @@ jobs:
           pip install azure-cli==2.49.0
           pip install azure-cli-core==2.49.0
           pip install azure-cli-telemetry==1.0.8
-          pip install azure-cli-ml==2.5.0
           pip install msal==1.22.0
           pip install azure-mgmt-resource==21.1.0b1
 
       - name: Verify installation
         run: az --version
       - name: Install az ml extension
-        run: az extension add -n ml -y
+        run: az extension add -n ml -y --version 2.5.0
       - name: Check az version
         run: az --version  
       - name: Azure login
