@@ -9,6 +9,34 @@ jobs:
     steps:
       - name: Check out repo
         uses: actions/checkout@main
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install virtualenv
+        run: python -m pip install --upgrade pip virtualenv
+
+      - name: Create virtual environment
+        run: virtualenv azure_cli_env
+
+      - name: Activate virtual environment
+        run: source azure_cli_env/bin/activate
+
+      - name: Install specific versions of Azure CLI and extensions
+        run: |
+          pip install azure-cli==2.49.0
+          pip install azure-cli-core==2.49.0
+          pip install azure-cli-telemetry==1.0.8
+          pip install azure-cli-ml==2.5.0
+          pip install msal==1.22.0
+          pip install azure-mgmt-resource==21.1.0b1
+
+      - name: Verify installation
+        run: az --version
       - name: Install az ml extension
         run: az extension add -n ml -y
       - name: Check az version
@@ -20,5 +48,9 @@ jobs:
       - name: set current directory
         run: cd src
       - name: generate endpoint
-        run: az ml online-endpoint create --name diabetes-mlflow -f src/endpoint-deploy.yml --resource-group MLOps --workspace-name MLOpsWS
+        run: az ml online-deployment create --name mlflow-deployment-2 \
+              --endpoint diabetes-mlflow -f mslearn-mlops/src/mlflow-deployment.yml \
+              --resource-group MLOps --workspace-name MLOpsWS --all-traffic
+      - name: Deactivate virtual environment
+        run: deactivate
       
