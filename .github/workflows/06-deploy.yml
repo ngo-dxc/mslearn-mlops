@@ -20,5 +20,5 @@ jobs:
       - name: set current directory
         run: cd src
       - name: generate endpoint
-        run: az ml online-endpoint create --name diabetes-mlflow -f src/endpoint-deploy.yml --resource-group AzMLChallenge --workspace-name AzMLChallengeDL
+        run: az ml online-endpoint create --name diabetes-mlflow -f src/endpoint-deploy.yml --resource-group MLOps --workspace-name MLOpsWS
       
