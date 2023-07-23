@@ -47,9 +47,7 @@ jobs:
       - name: set current directory
         run: cd src
       - name: generate endpoint
-        run: az ml online-deployment create --name mlflow-deployment-2 \
-              --endpoint diabetes-mlflow -f mslearn-mlops/src/mlflow-deployment.yml \
-              --resource-group MLOps --workspace-name MLOpsWS --all-traffic
+        run: az ml online-deployment create --name mlflow-deployment-2 --endpoint diabetes-mlflow -f src/mlflow-deployment.yml --resource-group MLOps --workspace-name MLOpsWS --all-traffic
       - name: Deactivate virtual environment
         run: deactivate
       
