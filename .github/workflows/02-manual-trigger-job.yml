@@ -11,14 +11,14 @@ jobs:
     steps:
     - name: Check out repo
       uses: actions/checkout@main
-    - name: set current directory
-      run: cd src
     - name: Install az ml extension
       run: az extension add -n ml -y
     - name: Azure login
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: set current directory
+      run: cd src
     - name: Set Experiment Variable
       id: step
       run: |
@@ -33,14 +33,14 @@ jobs:
     steps:
     - name: Check out repo
       uses: actions/checkout@main
-    - name: set current directory
-      run: cd src
     - name: Install az ml extension
       run: az extension add -n ml -y
     - name: Azure login
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: set current directory
+      run: cd src
     - name: Get Experiment Variable
       env:
         OUTPUT: ${{needs.train.outputs.output}}
